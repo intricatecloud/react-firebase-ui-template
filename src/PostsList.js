@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import firebase from "firebase/compat/app";
-import db from "./database";
+import * as db from "./database";
 
 export default function PostsList(props) {
   const [posts, setPosts] = useState([]);
@@ -12,18 +12,17 @@ export default function PostsList(props) {
     getPosts();
   }, []);
 
-  const onSubmit = async e => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     // firebase.auth().currentUser
     // debugger
-    console.log(firebase.auth())
+    console.log(firebase.auth());
     await db.createPost({
       username: e.target["author-username-input"].value,
       name: e.target["author-name-input"].value,
       message: e.target["message-input"].value,
-      userId: firebase.auth().currentUser.uid
-
+      userId: firebase.auth().currentUser.uid,
     });
 
     await getPosts();
